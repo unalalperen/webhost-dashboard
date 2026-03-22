@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alperen</title>
+    <!-- Google Fonts: Inter ve Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome İkonları -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Arka plan parçacık animasyonu için canvas -->
+    <canvas id="particle-canvas"></canvas>
+    
+    <!-- Ana İçerik Konteyneri -->
+    <div class="container">
+        <header class="header">
+            <div class="profile-container">
+                <!-- Profil fotoğrafınızı eklemek için 'src' kısmındaki linki kendi resminizin linkiyle (örn: profile.jpg) değiştirin -->
+                <img src="PP_01.png" alt="Alperen Profile" class="profile-pic" id="profileImage">
+            </div>
+            <h1>ahmed alperen unal</h1>
+            <p>Manage all your self-hosted services from a single dashboard</p>
+        </header>
+
+        <main class="grid-layout">
+            <!-- Open WebUI Kartı -->
+            <a href="http://openwebui.local" class="service-card" target="_blank" rel="noopener noreferrer">
+                <div class="card-glow"></div>
+                <div class="icon-container openwebui">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <h2>Open WebUI</h2>
+                <p>Manage and interact with your AI models.</p>
+                <div class="card-footer">
+                    <span>Launch App</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- n8n Kartı -->
+            <a href="http://n8n.local" class="service-card" target="_blank" rel="noopener noreferrer">
+                <div class="card-glow"></div>
+                <div class="icon-container n8n">
+                    <i class="fa-solid fa-diagram-project"></i>
+                </div>
+                <h2>n8n</h2>
+                <p>Workflow automation and custom integrations.</p>
+                <div class="card-footer">
+                    <span>Launch App</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- Coolify Kartı -->
+            <a href="http://coolify.local" class="service-card" target="_blank" rel="noopener noreferrer">
+                <div class="card-glow"></div>
+                <div class="icon-container coolify">
+                    <i class="fa-solid fa-server"></i>
+                </div>
+                <h2>Coolify</h2>
+                <p>Server applications and database management.</p>
+                <div class="card-footer">
+                    <span>Launch App</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+        </main>
+    </div>
+
+    <!-- Parçacık Animasyonu Scripti -->
+    <script src="script.js"></script>
+</body>
+</html>

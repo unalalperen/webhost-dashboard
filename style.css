@@ -1,0 +1,275 @@
+/* Değişkenler ve Sıfırlamalar */
+:root {
+    --bg-dark: #09090b;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    
+    /* Servis Renkleri */
+    --clr-openwebui: 14, 165, 233;   /* Mavi */
+    --clr-n8n: 234, 88, 12;         /* Turuncu */
+    --clr-coolify: 139, 92, 246;    /* Mor */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+}
+
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none; /* Mouse etkileşimini engellemesin ancak script içinde yakalarız */
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1280px;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Başlık Alanı */
+.header {
+    text-align: center;
+    margin-bottom: 5rem;
+    animation: fadeInDown 1.2s ease-out forwards;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-container {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.profile-pic:hover {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+}
+
+.header h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.05em;
+}
+
+.header p {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Kart Izgarası */
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    width: 100%;
+}
+
+/* Kart Stilleri (Glassmorphism) */
+.service-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    text-decoration: none;
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Animasyon Gecikmeleri */
+.service-card:nth-child(1) { animation-delay: 0.2s; }
+.service-card:nth-child(2) { animation-delay: 0.4s; }
+.service-card:nth-child(3) { animation-delay: 0.6s; }
+
+/* İmlece duyarlı gradient glow effekti - JavaScript ile hareket ettirilecek */
+.card-glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.08), transparent);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.service-card:hover .card-glow {
+    opacity: 1;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Kart İçi Öğeler (Z-Index ile glow üzerine çıkartıyoruz) */
+.icon-container, 
+.service-card h2, 
+.service-card p, 
+.card-footer {
+    position: relative;
+    z-index: 1;
+}
+
+/* İkonlar */
+.icon-container {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.25rem;
+    margin-bottom: 2rem;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.service-card:hover .icon-container {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.openwebui {
+    background: rgba(var(--clr-openwebui), 0.15);
+    color: rgb(var(--clr-openwebui));
+    border: 1px solid rgba(var(--clr-openwebui), 0.3);
+    box-shadow: 0 0 30px rgba(var(--clr-openwebui), 0.2);
+}
+
+.n8n {
+    background: rgba(var(--clr-n8n), 0.15);
+    color: rgb(var(--clr-n8n));
+    border: 1px solid rgba(var(--clr-n8n), 0.3);
+    box-shadow: 0 0 30px rgba(var(--clr-n8n), 0.2);
+}
+
+.coolify {
+    background: rgba(var(--clr-coolify), 0.15);
+    color: rgb(var(--clr-coolify));
+    border: 1px solid rgba(var(--clr-coolify), 0.3);
+    box-shadow: 0 0 30px rgba(var(--clr-coolify), 0.2);
+}
+
+.service-card:hover:nth-child(1) { box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 40px rgba(var(--clr-openwebui), 0.15); }
+.service-card:hover:nth-child(2) { box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 40px rgba(var(--clr-n8n), 0.15); }
+.service-card:hover:nth-child(3) { box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 40px rgba(var(--clr-coolify), 0.15); }
+
+.service-card h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.service-card p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    flex-grow: 1;
+}
+
+/* Kart Alt Kısmı (Aksion Linki) */
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #fff;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.service-card:hover .card-footer {
+    opacity: 1;
+}
+
+.card-footer i {
+    transition: transform 0.3s;
+}
+
+.service-card:hover .card-footer i {
+    transform: translateX(8px);
+}
+
+/* Keyframes (Animasyonlar) */
+@keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-40px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2.8rem;
+    }
+    
+    .container {
+        padding: 2rem 1.5rem;
+    }
+    
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+}
